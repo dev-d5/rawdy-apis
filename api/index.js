@@ -15,7 +15,8 @@ app.get('/', () => console.log("APi is Running! go to the end point: /jobs"))
 app.get('/jobs', (req, res) => {
   res.status(200).send({
     id: "12",
-    title:  'front-end position in tehran'
+    title:  'front-end position in tehran',
+    location: 'Janat abaad'
   })
 })
 
