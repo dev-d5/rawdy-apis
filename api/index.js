@@ -1,6 +1,7 @@
 const express = require('express');
+const jobs = require("../data/jobs.json");
 const app = express();
-const port = 8000;
+const port = 3000;
 
 app.use(express.json())
 
@@ -13,11 +14,7 @@ app.listen(
 app.get('/', () => console.log("APi is Running! go to the end point: /jobs"))
 
 app.get('/jobs', (req, res) => {
-  res.status(200).send({
-    id: "12",
-    title:  'front-end position in tehran',
-    location: 'Janat abaad'
-  })
+  res.status(200).send(jobs)
 })
 
 app.post("/jobs/:id", (req, res) => {
@@ -37,3 +34,8 @@ app.post("/jobs/:id", (req, res) => {
   })
 
 })
+
+// Fallback Route
+app.use((req, res) => {
+  res.status(404).send({ message: "Route not found!" });
+});
