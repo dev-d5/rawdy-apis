@@ -1,9 +1,14 @@
+const cors = require('cors')
 const express = require('express');
 const jobs = require("../data/jobs.json");
 const app = express();
 const port = 3000;
 
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your deployed React app URL if needed
+  origin: 'https://skillupia.vercel.app/'
+}));
 
 app.listen(
   port,
