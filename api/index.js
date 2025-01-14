@@ -7,7 +7,7 @@ const port = 3000;
 app.use(express.json())
 app.use(cors({
   origin: 'https://skillupia.vercel.app',
-  local: 'http://localhost:3000'
+  origin: 'http://localhost:3000'
 }));
 
 app.listen(
