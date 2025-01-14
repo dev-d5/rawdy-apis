@@ -6,7 +6,7 @@ const port = 3000;
 
 app.use(express.json())
 app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your deployed React app URL if needed
+  origin: 'https://skillupia.vercel.app/', // Replace with your deployed React app URL if needed
 }));
 
 app.listen(
@@ -15,7 +15,9 @@ app.listen(
 )
 
 
-app.get('/', () => console.log("APi is Running! go to the end point: /jobs"))
+app.get('/', (req, res) => {
+  res.status(200).send("APi is Running! go to the end point: /jobs")
+})
 
 app.get('/jobs', (req, res) => {
   res.status(200).send(jobs)
