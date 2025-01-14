@@ -6,7 +6,8 @@ const port = 3000;
 
 app.use(express.json())
 app.use(cors({
-  origin: 'https://skillupia.vercel.app', // Replace with your deployed React app URL if needed
+  origin: 'https://skillupia.vercel.app',
+  local: 'http://localhost:3000'
 }));
 
 app.listen(
