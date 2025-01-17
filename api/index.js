@@ -55,7 +55,7 @@ app.post("/jobs", (req, res) => {
   console.log(`Attempting to create new job with title: ${title}`);
 
   // Generate a new ID if one isn't provided
-  if (!id) {
+  if (id === "") {
     id = Math.max(...jobs.map(job => job.id), 0) + 1;
     console.log(`Generated new id: ${id}`);
   }
