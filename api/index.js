@@ -49,9 +49,11 @@ app.post("/jobs", (req, res) => {
   if (!title || !location || !type || !description || !salary || !company) {
     return res.status(400).json({message: "Missing required fields"})
   }
+ 
+  const newId = jobs.length()
 
   const newJob = {
-    id: String(id),
+    id: String(newId),
     title,
     type,
     description,
