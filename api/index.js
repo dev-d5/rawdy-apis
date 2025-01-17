@@ -22,7 +22,13 @@ app.get('/jobs', (req, res) => {
 })
 
 app.get('/jobs/:id', (req, res) => {
-  res.status(200).send(jobs)
+  let job;
+  for (job in jobs) {
+    if (req.id === job.id) {
+      res.status(200).send(job)
+    }
+  }
+  
 })
 
 app.post("/jobs/:id", (req, res) => {
