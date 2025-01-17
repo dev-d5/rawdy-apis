@@ -14,16 +14,16 @@ app.listen(
 
 
 app.get('/', (req, res) => {
-  res.status(200).send("APi is Running! go to the end point: /jobs")
+  res.status(200).json("APi is Running! go to the end point: /jobs")
 })
 
 app.get('/jobs', (req, res) => {
-  res.status(200).send(jobs)
+  res.status(200).json(jobs)
 })
 
 app.get('/jobs/:id', (req, res) => {
   const { id } = req.params;
-  const job = jobs.find(job => job.id === parseInt(id));
+  const job = jobs.find(job => job.id === id);
   
   if (job) {
     res.status(200).json(job);
@@ -37,14 +37,14 @@ app.post("/jobs/:id", (req, res) => {
   const {title, location} = req.body;
 
   if (!title) {
-    res.status("418").send({message: "we need some title!"})
+    res.status("418").json({message: "we need some title!"})
   }
   
   if (!location) {
-    res.status("418").send({message: "we need a location!"})
+    res.status("418").json({message: "we need a location!"})
   }
 
-  res.status("200").send({
+  res.status("200").json({
     title: `created a job with an ID: ${id}, title: ${title} and location: ${location}`
   })
 
@@ -52,6 +52,6 @@ app.post("/jobs/:id", (req, res) => {
 
 // Fallback Route
 app.use((req, res) => {
-  res.status(404).send({ message: "Route not found!" });
+  res.status(404).json({ message: "Route not found!" });
 });
 
