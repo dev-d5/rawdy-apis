@@ -21,6 +21,10 @@ app.get('/jobs', (req, res) => {
   res.status(200).send(jobs)
 })
 
+app.get('/jobs/:id', (req, res) => {
+  res.status(200).send(jobs)
+})
+
 app.post("/jobs/:id", (req, res) => {
   const {id} = req.params;
   const {title, location} = req.body;
