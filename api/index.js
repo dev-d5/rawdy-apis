@@ -50,7 +50,7 @@ app.post("/jobs", (req, res) => {
     return res.status(400).json({message: "Missing required fields"})
   }
  
-  const newId = jobs.length()
+  let newId = jobs.length()
 
   const newJob = {
     id: String(newId),
