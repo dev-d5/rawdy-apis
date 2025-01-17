@@ -24,7 +24,7 @@ app.get('/jobs', (req, res) => {
 app.get('/jobs/:id', (req, res) => {
   let job;
   for (job in jobs) {
-    if (req.id === job.id) {
+    if (req.params.id === job.id) {
       res.status(200).send(job)
     }
   }
