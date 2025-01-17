@@ -22,14 +22,15 @@ app.get('/jobs', (req, res) => {
 })
 
 app.get('/jobs/:id', (req, res) => {
-  let job;
-  for (job in jobs) {
-    if (req.params.id === job.id) {
-      res.status(200).send(job)
-    }
-  }
+  const { id } = req.params;
+  const job = jobs.find(job => job.id === parseInt(id));
   
-})
+  if (job) {
+    res.status(200).json(job);
+  } else {
+    res.status(404).json({ message: "Job not found" });
+  }
+});
 
 app.post("/jobs/:id", (req, res) => {
   const {id} = req.params;
@@ -53,3 +54,4 @@ app.post("/jobs/:id", (req, res) => {
 app.use((req, res) => {
   res.status(404).send({ message: "Route not found!" });
 });
+
