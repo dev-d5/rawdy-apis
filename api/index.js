@@ -55,8 +55,9 @@ app.post("/jobs", (req, res) => {
   console.log(`Attempting to create new job with title: ${title}`);
 
   // Generate a new ID if one isn't provided
-  if (id === "") {
-    id = Math.max(...jobs.map(job => job.id), 0) + 1;
+  if (!id) {
+    
+    id = String(jobs.length + "1");
     console.log(`Generated new id: ${id}`);
   }
 
@@ -94,3 +95,4 @@ app.use((req, res) => {
   console.log(`404 - Route not found: ${req.url}`);
   res.status(404).json({ message: "Route not found!" });
 });
+
