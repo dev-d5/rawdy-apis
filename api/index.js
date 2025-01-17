@@ -94,4 +94,3 @@ app.use((req, res) => {
   console.log(`404 - Route not found: ${req.url}`);
   res.status(404).json({ message: "Route not found!" });
 });
-
