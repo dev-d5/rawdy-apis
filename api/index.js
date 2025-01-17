@@ -42,51 +42,54 @@ app.get('/jobs/:id', (req, res) => {
 });
 
 app.post("/jobs", (req, res) => {
-  let {
-    id,
-    title,
-    type,
-    description,
-    location,
-    salary,
-    company
-  } = req.body;
+  const newJob = req.body;
+  console.log(`Attempting to create new job: ${newJob.title}`);
 
-  console.log(`Attempting to create new job with title: ${title}`);
-
-  // Generate a new ID if one isn't provided
-  if (!id) {
-    id = String(Math.max(...jobs.map(job => job.id), 0) + "1");
-    console.log(`Generated new id: ${id}`);
+  if (!newJob.id) {
+    newJob.id = String(Math.max(...jobs.map(job => parseInt(job.id)), 0) + 1);
   }
 
-  if (jobs.some(job => job.id === String(id))) {
-    console.log(`Job with id ${id} already exists`);
+  if (jobs.some(job => job.id === String(newJob.id))) {
+    console.log(`Job with id ${newJob.id} already exists`);
     return res.status(409).json({message: "A job with this ID already exists"})
   }
 
-  if (!title || !location || !type || !description || !salary || !company) {
-    console.log('Missing required fields');
-    return res.status(400).json({message: "Missing required fields"})
-  }
-
-  const newJob = {
-    id: String(id),
-    title,
-    type,
-    description,
-    location,
-    salary,
-    company
-  };
-
   jobs.push(newJob);
-  console.log(`New job created with id: ${id}`);
+  console.log(`New job created with id: ${newJob.id}`);
+  res.status(201).json(newJob);
+})
 
-  res.status(201).json({
-    message: `Created a new job with ID: ${id}`,
-    job: newJob
-  })
+app.put("/jobs/:id", (req, res) => {
+  const { id } = req.params;
+  const updatedJob = req.body;
+  console.log(`Attempting to update job with id: ${id}`);
+
+  const index = jobs.findIndex(job => job.id === String(id));
+  
+  if (index !== -1) {
+    jobs[index] = { ...jobs[index], ...updatedJob, id: String(id) };
+    console.log(`Job updated: ${jobs[index].title}`);
+    res.status(200).json(jobs[index]);
+  } else {
+    console.log(`Job with id ${id} not found for update`);
+    res.status(404).json({ message: "Job not found" });
+  }
+})
+
+app.delete("/jobs/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(`Attempting to delete job with id: ${id}`);
+
+  const index = jobs.findIndex(job => job.id === String(id));
+  
+  if (index !== -1) {
+    const deletedJob = jobs.splice(index, 1)[0];
+    console.log(`Job deleted: ${deletedJob.title}`);
+    res.status(200).json({ message: "Job deleted successfully", job: deletedJob });
+  } else {
+    console.log(`Job with id ${id} not found for deletion`);
+    res.status(404).json({ message: "Job not found" });
+  }
 })
 
 // Fallback Route
@@ -94,4 +97,3 @@ app.use((req, res) => {
   console.log(`404 - Route not found: ${req.url}`);
   res.status(404).json({ message: "Route not found!" });
 });
-
