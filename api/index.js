@@ -56,8 +56,7 @@ app.post("/jobs", (req, res) => {
 
   // Generate a new ID if one isn't provided
   if (!id) {
-    
-    id = String(jobs.length + "1");
+    id = String(Math.max(...jobs.map(job => job.id), 0) + "1");
     console.log(`Generated new id: ${id}`);
   }
 
