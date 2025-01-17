@@ -67,7 +67,7 @@ app.put("/jobs/:id", (req, res) => {
   const index = jobs.findIndex(job => job.id === String(id));
   
   if (index !== -1) {
-    jobs[index] = { ...jobs[index], ...updatedJob, id: String(id) };
+    jobs[index] = { ...jobs[index], ...updatedJob};
     console.log(`Job updated: ${jobs[index].title}`);
     res.status(200).json(jobs[index]);
   } else {
