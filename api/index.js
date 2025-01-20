@@ -42,11 +42,22 @@ app.get('/jobs/:id', (req, res) => {
 });
 
 app.post("/jobs", (req, res) => {
+  function generateRandomId(length = 10) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   const newJob = req.body;
   console.log(`Attempting to create new job: ${newJob.title}`);
 
   if (!newJob.id) {
-    newJob.id = String(Math.max(...jobs.map(job => parseInt(job.id)), 0) + 1);
+    newJob.id = generateRandomId(5);
   }
 
   if (jobs.some(job => job.id === String(newJob.id))) {
